@@ -7,8 +7,10 @@
         public string email_usuario { get; set; }
         public DateTime fecha_registro { get; set; }
         public bool activo {  get; set; }
-        string contrasennia { get; set; }
+        public string contrasennia { get; set; }
 
-        
+          public Rol rol { get; set; }
+
+
     }
 }

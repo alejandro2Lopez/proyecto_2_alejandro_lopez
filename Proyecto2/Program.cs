@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Proyecto2;
+using Proyecto2.Data;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -54,7 +55,8 @@ builder.Services.AddAuthorization();
 
 
 builder.Services.AddScoped<JwtService>();
-
+builder.Services.AddScoped<BdConnection>();
+builder.Services.AddScoped<UsuarioData>();
 var app = builder.Build();
 
 app.UseHttpsRedirection();

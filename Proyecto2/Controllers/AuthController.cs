@@ -1,25 +1,37 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Proyecto2;
+using Proyecto2.Data;
+using Proyecto2.Model.Entities;
 
 [ApiController]
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
     private readonly JwtService _jwtService;
-
-    public AuthController(JwtService jwtService)
+    private readonly UsuarioData _suarioData;
+    public AuthController(JwtService jwtService, UsuarioData usuarioData)
     {
         _jwtService = jwtService;
+        _suarioData = usuarioData;
     }
 
     [HttpPost("AuthUser")]
-    public IActionResult AuthUser()
+    public IActionResult AuthUser([FromBody] LoginDTO usuario)
     {
-        // Valores de prueba para verificar JWT.
-        // En producción deben venir de un usuario autenticado.
-        int idUsuario = 1;
-        string nombre = "UsuarioPrueba";
-        string rol = "Administrador";
+
+
+        Usuario? usuario1 = _suarioData.ValidarUsuario(usuario.Email, usuario.Contrasennia);
+        if (usuario1 == null) {
+            return Unauthorized(new
+            {
+                mensaje = "Credenciales incorrectas"
+            });
+        }
+
+    
+        int idUsuario = usuario1.id_usuario;
+        string nombre = usuario1.nombre_usuario;
+        string rol = usuario1.rol.nombre_rol;
 
         string token = _jwtService.GenerarToken(
             idUsuario,
