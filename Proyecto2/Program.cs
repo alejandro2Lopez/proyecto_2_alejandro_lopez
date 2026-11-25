@@ -57,6 +57,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<BdConnection>();
 builder.Services.AddScoped<UsuarioData>();
+builder.Services.AddScoped<CatalogoData>();
 var app = builder.Build();
 
 app.UseHttpsRedirection();
